@@ -1,3 +1,7 @@
+[![DOI](https://zenodo.org/badge/209043786.svg)](https://zenodo.org/badge/latestdoi/209043786)
+
+![GitHub](https://img.shields.io/github/license/oliversefrin/soil-texture-processing)
+
 # Processing Sentinel-2 images and Shapefiles with GDAL
 
 This git repository provides tools to generate training and classification data for machine learning purposes from multispectral Sentinel-2 satellite images and and a .shp file that lies in the area of the Sentinel-2 image.
