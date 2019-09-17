@@ -1,7 +1,9 @@
-[![DOI](https://zenodo.org/badge/209043786.svg)](https://zenodo.org/badge/latestdoi/209043786)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3431628.svg)](https://doi.org/10.5281/zenodo.3431628)
 ![GitHub](https://img.shields.io/github/license/oliversefrin/soil-texture-processing)
 
-# Processing Sentinel-2 images and Shapefiles with GDAL
+# Processing Sentinel-2 Images and Shapefiles with GDAL
+
+<img align="right" height="600" src="/data/training_data/subset_split_map.png" alt="Example image of a subset split map" title="Example image of a subset split map">
 
 This git repository provides tools to generate training and classification data for machine learning purposes from multispectral Sentinel-2 satellite images and and a .shp file that lies in the area of the Sentinel-2 image.
 
@@ -16,8 +18,6 @@ Training data can be randomly split into train, test and validation tiles result
 * [Sina Keller](https://github.com/sinakeller)
 
 **Citation:** See [citation](#citation) and [bibliography.bib](bibliography.bib).
-
-<img src="/data/training_data/subset_split_map.png" alt="Example image of a subset split map" title="Example image of a subset split map" style="zoom:15%; float: center;" />
 
 ## Content
 
@@ -202,4 +202,15 @@ To go back from a 1-dimensional list of pixel to a 2D array (i.e. a map), use th
 
 ## Citation
 
-TODO
+Oliver Sefrin, Felix M. Riese and Sina Keller, "Processing Sentinel-2 Images and Shapefiles with GDAL", Code, Zenodo, 2019. ([Link](https://doi.org/10.5281/zenodo.3431628))
+
+```
+@misc{sefrin2019processing,
+  author       = {Sefrin, Oliver and Riese, Felix~M. and Keller, Sina},
+  title        = {Processing Sentinel-2 Images and Shapefiles with GDAL},
+  year         = 2019,
+  doi          = {10.5281/zenodo.3431628},
+  url          = {https://doi.org/10.5281/zenodo.3431628},
+  publisher    = {Zenodo}
+}
+```
