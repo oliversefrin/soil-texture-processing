@@ -1,0 +1,5 @@
+# to use the package itself
+gdal==2.4.0
+geopandas==0.5.1
+descartes==1.1.0
+rasterio==1.0.22
