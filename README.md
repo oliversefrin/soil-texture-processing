@@ -1,5 +1,4 @@
 [![DOI](https://zenodo.org/badge/209043786.svg)](https://zenodo.org/badge/latestdoi/209043786)
-
 ![GitHub](https://img.shields.io/github/license/oliversefrin/soil-texture-processing)
 
 # Processing Sentinel-2 images and Shapefiles with GDAL
