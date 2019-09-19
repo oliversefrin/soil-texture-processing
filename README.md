@@ -1,5 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3431628.svg)](https://doi.org/10.5281/zenodo.3431628)
 ![GitHub](https://img.shields.io/github/license/oliversefrin/soil-texture-processing)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ede20543b10c42d5879fb4f223d26e2e)](https://www.codacy.com/manual/felixriese/soil-texture-processing?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=oliversefrin/soil-texture-processing&amp;utm_campaign=Badge_Grade)
 
 # Processing Sentinel-2 Images and Shapefiles with GDAL
 
@@ -21,17 +22,12 @@ Training data can be randomly split into train, test and validation tiles result
 
 ## Content
 
-1. [Usage Instructions](#usage-instructions)
-2. [Files and file structure](#files-and-file-structure)
+1. [Usage Instructions](#Usage-Instructions)
+2. [Files and file structure](#Files-and-file-structure)
 3. [Scripts](#scripts)
+4. [Citation](#citation)
 
-
-
-<a name="usage-instructions">
-
-## 1. Usage Instructions
-
-</a>
+## Usage Instructions
 
 **How to use this repository?**
 
@@ -51,13 +47,7 @@ Training data can be randomly split into train, test and validation tiles result
 
    2. Open the notebook folder in this repository in the Jupyter browser and select the notebook `05_subset_split.ipynb`
 
-
-
-<a name="files-and-file-structure">
-
-## 2. Files and file structure
-
-</a>
+## Files and file structure
 
 To operate the scripts easily, the file structure should be held as indicated.
 
@@ -67,17 +57,13 @@ An `overallshape.shp` file (plus its auxiliary files) that contains the shape of
 
 Finally, the Sentinel-2 data just needs to be unzipped and the whole folder should be moved to the subdirectory of *sentinel* corresponding to the processing level.
 
+---
 
+## Scripts
 
-<a name="scripts">
+### 01_clip_sentinel.sh
 
-## 3. Scripts
-
-</a>
-
-#### 01_clip_sentinel.sh
-
-##### Usage
+#### Usage
 
 Execute the script as
 
@@ -89,15 +75,13 @@ and *LEVEL*: its processing level (either L1C or L2A are valid).
 
 No paths or parameters need to be changed.
 
-##### Description
+#### Description
 
 The output file `DATE_LEVEL_all_bands.tif` contains all bands of the processing level in a .`tif` file that is cropped to the dimensions of the shapefile area. and is saved in the directory of the Sentinel-2 image.
 
+### 02_rasterize_shapefile.sh
 
-
-#### 02_rasterize_shapefile.sh
-
-##### Usage
+#### Usage
 
 Execute the script as
 
@@ -105,7 +89,7 @@ Execute the script as
 
 Be aware that variables need to be set specifically in the script.
 
-##### Description
+#### Description
 
 Rasterize one parameter from a given `.shp` file as a Geotiff file that matches the geospatial dimensions of the previously created `DATE_LEVEL_all_bands.tif`.
 
@@ -117,10 +101,9 @@ The variables *X_MIN*, *X_MAX*, *Y_MIN*, *Y_MAX* and *COORD_SYS* have to match t
 
 `gdalinfo DATE_LEVEL_all_bands.tif` (of course, replace DATE and LEVEL with the actual values).
 
+### 03_create_area_tif.py
 
-#### 03_create_area_tif.py
-
-##### Usage
+#### Usage
 
 Simply execute the script as
 
@@ -128,7 +111,7 @@ Simply execute the script as
 
 Once executed, there is no need to create another `area.tif` another time (assuming neither the shapefile nor the Sentinel-2 image tile have changed).
 
-##### Description
+#### Description
 
 Creates the file `area.tif` in the subdirectory *data/shapefile/gt_params_files*.
 
@@ -136,10 +119,9 @@ This Geotiff file consists of one band containing only ones and zeros: ones in t
 
 Such a `.tif` file might come in handy at several occasions as it masks the area of interest.
 
+### 04_merge_tifs.sh
 
-#### 04_merge_tifs.sh
-
-##### Usage
+#### Usage
 
 Execute the script as
 
@@ -150,7 +132,7 @@ with *DATE* (YYYYMMDD), *LEVEL* (L1C/L2A) being the date and processing level of
 If *USE*=*TRAIN*, the rasterized Ground Truth created by script no. 02 will be added as the last band to `DATE_LEVEL_all_bands.tif`.
 If *USE*=*NEW*, the `area.tif` will be added as the last band to `DATE_LEVEL_all_bands.tif`.
 
-##### Description
+#### Description
 
 This script allows to merge the preprocessed Sentinel-2 image file, `DATE_LEVEL_all_bands.tif`, either with the Ground Truth `.tif` file or the `area.tif`.
 The output `DATE_LEVEL_merged.tif` is saved in a separate *DATE_data* subdirectory of either *data/training_data* or *data/new_data*, depending of the intended use.
@@ -158,10 +140,9 @@ The output `DATE_LEVEL_merged.tif` is saved in a separate *DATE_data* subdirecto
 Setting *USE*=*TRAIN* allows to use the result for training of a Machine Learning model with the Sentinel-2 bands as X and the Ground Truth as Y.
 *USE*=*NEW* on the other hand allows to predict on the Sentinel-2 image whilst the band representing the `area.tif` restricts the area of interest.
 
+### 05_subset_split.ipynb
 
-#### 05_subset_split.ipynb
-
-##### Usage
+#### Usage
 
 Start a Jupyter Kernel as described above ([Usage Instructions](#usage-instructions), point 4.) and open the `05_subset_split.ipynb` Notebook.
 
@@ -169,15 +150,15 @@ Set the variables in section *1. Set variables and dictionaries*.
 
 Execute the cells in order, note that subsection 3.2 is purely optional and project specific and subsection 3.5 is meant as an example which doesn't need to be executed.
 
-##### Description
+#### Description
 
 This script uses a `DATE_LEVEL_merged.tif`  that has the Ground Truth as the last band, i.e. that is training data. The pixel of the `.tif` file are separated in tiles of specified tilesize with a specified gap between the tiles. Next, the tiles are randomly (although with fixed random seed for repeatability) split into 3 subsets *train*, *test* and *validation* and saved as .csv files. The fraction of train, test and validation data can be specified as well.
 
 Subset splits are saved in the subdirectory *data/training_data/DATE_data/* as *DATE_LEVEL_tilesize_TILESIZE_train.csv* (with *DATE, LEVEL, TILESIZE*: the corresponding values) or with *validation* or *test*, respectively.
 
-#### 06_create_full_csv.py
+### 06_create_full_csv.py
 
-##### Usage
+#### Usage
 
 Execute the script as
 
@@ -185,7 +166,7 @@ Execute the script as
 
 with *DATE* (YYYYMMDD), *LEVEL* (L1C/L2A) being the date and processing level of the Sentinel-2 image.
 
-##### Description
+#### Description
 
 This script creates a `.csv` file that contains the Sentinel-2 data. Each column is a Sentinel-2 band, each row is a single pixel.
 
@@ -199,12 +180,13 @@ To go back from a 1-dimensional list of pixel to a 2D array (i.e. a map), use th
 
 `col_nr = index_nr % width`
 
+---
 
 ## Citation
 
 Oliver Sefrin, Felix M. Riese and Sina Keller, "Processing Sentinel-2 Images and Shapefiles with GDAL", Code, Zenodo, 2019. ([Link](https://doi.org/10.5281/zenodo.3431628))
 
-```
+```tex
 @misc{sefrin2019processing,
   author       = {Sefrin, Oliver and Riese, Felix~M. and Keller, Sina},
   title        = {Processing Sentinel-2 Images and Shapefiles with GDAL},

@@ -10,7 +10,8 @@ of the shapefile and the Sentinel-2 image.
 Checking for zero values in the Sentinel-2 image has the
 purpose of restricting the area.tif to the inside of the Sentinel-2 image.
 As the spectral intensities never quite reach 0 even for low reflectance,
-this procedure shouldn't falsely exclude pixel within the area of the Sentinel-2 image.
+this procedure shouldn't falsely exclude pixel within the area of the
+Sentinel-2 image.
 """
 
 from glob import glob

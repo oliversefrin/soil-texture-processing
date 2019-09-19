@@ -18,7 +18,9 @@ from skimage.io import imread
 date = sys.argv[1]
 level = sys.argv[2]
 
-print(f'Open {date}_{level}_merged.tif and convert pixel in area to .csv file...', end=' ')
+print(
+    f'Open {date}_{level}_merged.tif and convert pixel in area to .csv file..',
+    end=' ')
 
 # read tif
 data = imread(f'data/new_data/{date}_data/{date}_{level}_merged.tif')
@@ -40,7 +42,8 @@ elif level == 'L2A':
 else:
     print(f'{level} is not a valid LEVEL argument, choose either L1C or L2A.')
 
-# flatten array from shape (height, width, channels) to (height*width, channels)
+# flatten array from shape (height, width, channels)
+# to (height*width, channels)
 data_flat = np.zeros((height*width, len(bands)+1))
 
 for i in range(len(bands)+1):
@@ -51,7 +54,7 @@ df = pd.DataFrame(data=data_flat,
                   columns=bands+['is_in_area'])
 
 # drop pixel outside of area of interest
-df = df[df['is_in_area']==1]
+df = df[df['is_in_area'] == 1]
 df = df.drop(columns=['is_in_area'])
 
 # save as csv
