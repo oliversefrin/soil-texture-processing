@@ -15,7 +15,6 @@ Sentinel-2 image.
 """
 
 from glob import glob
-import numpy as np
 import rasterio
 
 print('creating area.tif...', end=' ')
