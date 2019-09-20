@@ -176,9 +176,10 @@ Please note that only pixel within the area of interest, i.e. pixel with value 1
 
 To go back from a 1-dimensional list of pixel to a 2D array (i.e. a map), use the indices in the `.csv` file. These number the pixel as if the 2D array was flattened row by row (C-ordering), which it was in fact. Hence, to get the row and column number, use the following (pseudo-)code:
 
-`row_nr = index_nr // width`
-
-`col_nr = index_nr % width`
+```python
+row_nr = index_nr // width
+col_nr = index_nr % width
+```
 
 ---
 
